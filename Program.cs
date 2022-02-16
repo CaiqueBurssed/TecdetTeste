@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TecdetTeste.Data;
 using TecdetTeste.Models;
 
 namespace TecdetTeste
@@ -40,15 +43,17 @@ namespace TecdetTeste
         {
             try
             {
-                int contador = 0;
                 DirectoryInfo di = new DirectoryInfo(@"C:\Users\User\Desktop\Tecdet\TecdetTeste\Dados");
-                
+
+                int contador = 0;
+                Passagem passagemDeserializada = null;
                 foreach (var arquivo in di.GetFiles())
                 {
                     using (StreamReader file = new StreamReader(arquivo.FullName))
                     {
-                        Console.Write(file.ReadToEnd());
-                        var passagemDeserializada = JsonConvert.DeserializeObject<Passagem>(file.ReadToEnd());
+                        Console.WriteLine(file.ReadToEnd());
+                        passagemDeserializada = JsonConvert.DeserializeObject<Passagem>(file.ReadToEnd());
+                        var context = new PassagemContext();
 
                         var passagem = new Passagem()
                         {
@@ -58,9 +63,13 @@ namespace TecdetTeste
                             Equipamento = passagemDeserializada.Equipamento,
                             Faixa = passagemDeserializada.Faixa
                         };
+
+                        context.Passagens.Add(passagem);
+                        context.SaveChanges();
                     }
                     contador++;
                 }
+                Console.WriteLine(contador + " objetos Jsons foram importados com sucesso!");
             }
             catch (Exception e)
             {
@@ -68,5 +77,6 @@ namespace TecdetTeste
             }
             
         }
+
     }
 }

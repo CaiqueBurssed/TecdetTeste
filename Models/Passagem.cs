@@ -11,6 +11,9 @@ namespace TecdetTeste.Models
     {
         [Key]
         [Required]
+        public int Id { get; set; }
+
+        [Required]
         [MaxLength(250)]
         public string Placa { get; set; }
 
