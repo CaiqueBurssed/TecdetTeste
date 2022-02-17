@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using TecdetTeste.Data;
 using TecdetTeste.Models;
+using TecdetTeste.Controller;
 
 namespace TecdetTeste
 {
@@ -14,8 +15,56 @@ namespace TecdetTeste
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            //deserializarPassagem();
-            deserializarListaDePassagens();
+
+            deserializarListaDePassagens();         
+        }
+
+        //Deserializar todas as passagens.
+        private static void deserializarListaDePassagens()
+        {
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(@"..\..\..\Dados");
+
+                int contador = 0;
+                var context = new PassagemContext();
+                IPassagemRepo repository = new SqlPassagemRepo(context);
+                PassagensController passagemController = new PassagensController(repository);
+                Passagem passagemDeserializada = null;
+
+                foreach (var arquivo in di.GetFiles())
+                {
+                    try
+                    {
+                        using (StreamReader file = new StreamReader(arquivo.FullName))
+                        {
+                            //Console.WriteLine(file.ReadToEnd());
+                            passagemDeserializada = JsonConvert.DeserializeObject<Passagem>(file.ReadToEnd());
+
+                            var passagem = new Passagem()
+                            {
+                                Placa = passagemDeserializada.Placa,
+                                Data = passagemDeserializada.Data,
+                                Hora = passagemDeserializada.Hora,
+                                Equipamento = passagemDeserializada.Equipamento,
+                                Faixa = passagemDeserializada.Faixa
+                            };
+                            passagemController.createPassagem(passagem);
+                        }
+                        contador++;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }   
+                }
+                Console.WriteLine(contador + " objetos Jsons foram importados com sucesso!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
 
         //Deserializar uma única passagem.
@@ -35,47 +84,7 @@ namespace TecdetTeste
             {
                 Console.WriteLine(e.Message);
             }
-            
-        }
 
-        //Deserializar todas as passagens.
-        private static void deserializarListaDePassagens()
-        {
-            try
-            {
-                DirectoryInfo di = new DirectoryInfo(@"C:\Users\User\Desktop\Tecdet\TecdetTeste\Dados");
-
-                int contador = 0;
-                Passagem passagemDeserializada = null;
-                foreach (var arquivo in di.GetFiles())
-                {
-                    using (StreamReader file = new StreamReader(arquivo.FullName))
-                    {
-                        Console.WriteLine(file.ReadToEnd());
-                        passagemDeserializada = JsonConvert.DeserializeObject<Passagem>(file.ReadToEnd());
-                        var context = new PassagemContext();
-
-                        var passagem = new Passagem()
-                        {
-                            Placa = passagemDeserializada.Placa,
-                            Data = passagemDeserializada.Data,
-                            Hora = passagemDeserializada.Hora,
-                            Equipamento = passagemDeserializada.Equipamento,
-                            Faixa = passagemDeserializada.Faixa
-                        };
-
-                        context.Passagens.Add(passagem);
-                        context.SaveChanges();
-                    }
-                    contador++;
-                }
-                Console.WriteLine(contador + " objetos Jsons foram importados com sucesso!");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
         }
 
     }

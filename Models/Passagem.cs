@@ -18,9 +18,11 @@ namespace TecdetTeste.Models
         public string Placa { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Data { get; set; }
 
         [Required]
+        [DataType(DataType.Time)]
         public DateTime Hora { get; set; }
 
         [Required]

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TecdetTeste.Migrations
 {
-    public partial class CreatePassagemDB : Migration
+    public partial class CreatePassagensDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

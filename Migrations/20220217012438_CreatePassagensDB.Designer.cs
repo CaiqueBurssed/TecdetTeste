@@ -10,8 +10,8 @@ using TecdetTeste.Data;
 namespace TecdetTeste.Migrations
 {
     [DbContext(typeof(PassagemContext))]
-    [Migration("20220216135625_CreatePassagemDB")]
-    partial class CreatePassagemDB
+    [Migration("20220217012438_CreatePassagensDB")]
+    partial class CreatePassagensDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
