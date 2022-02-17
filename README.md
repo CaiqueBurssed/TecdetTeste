@@ -31,7 +31,7 @@ Antes de podermos rodar propriamente a aplicação, será necessário substituir
 
 	optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=PassagemDB;Trusted_Connection=True;User ID=sa;Password=senha123;");
 	
-Uma vez sua string de conexão esteja propriamente adequada com a de seu servidor local,  iremos  precisar criar o banco de dados em seu SqlServer.
+Uma vez que sua string de conexão esteja propriamente adequada com a de seu servidor local,  iremos  precisar criar o banco de dados em seu SqlServer.
 
 Para isso, usaremos o próprio terminal do Visual Studio.
 * Clique em Exibir e depois Terminal, ou Ctrl + ' ;
