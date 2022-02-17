@@ -41,7 +41,7 @@ Para isso, usaremos o próprio terminal do Visual Studio.
 	
 Isso vai fazer com que se crie o banco de dados com o  nome e local especificado na string de conexão do método `OnConfiguring`. Irá também criar a tabela `Passagens` no banco,  como mostrado abaixo:
 
-![Exemplo de criação do Banco de Dados](file:///C:/Users/User/Desktop/Tecdet/exemploDB.PNG)
+![Exemplo de criação do Banco de Dados](https://drive.google.com/file/d/1sl2TWkYCYzZOGVDbWgqI7s1jh_CFmQZS/view?usp=sharing)
 
 ## Rodar aplicação
 
